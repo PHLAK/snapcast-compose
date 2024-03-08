@@ -1,0 +1,31 @@
+version: '3'
+services:
+
+  snapcast:
+    image: phlak/snapcast-server
+    env_file: environment.d/snapcast.env
+    environment:
+      WATCHTOWER_SCOPE: ${COMPOSE_PROJECT_NAME}
+    network_mode: host
+    volumes:
+      - ./volumes/snapcast/snapserver.conf:/etc/snapserver.conf:ro
+      - ${SNAPCAST_CACHE_DIR:-snapcast-cache}:/var/cache/snapcast
+      - /etc/localtime:/etc/localtime:ro
+    labels:
+      com.centurylinklabs.watchtower.scope: ${COMPOSE_PROJECT_NAME}
+    restart: unless-stopped
+
+  watchtower:
+    image: containrrr/watchtower
+    env_file: environment.d/watchtower.env
+    environment:
+      WATCHTOWER_SCOPE: ${COMPOSE_PROJECT_NAME}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/localtime:/etc/localtime:ro
+    labels:
+      com.centurylinklabs.watchtower.scope: ${COMPOSE_PROJECT_NAME}
+    restart: unless-stopped
+
+volumes:
+  snapcast-cache: {}
