@@ -7,6 +7,8 @@ services:
     environment:
       WATCHTOWER_SCOPE: ${COMPOSE_PROJECT_NAME}
     network_mode: host
+    devices:
+      - /dev/snd:/dev/snd
     volumes:
       - ./volumes/snapcast/snapserver.conf:/etc/snapserver.conf:ro
       - ${SNAPCAST_CACHE_DIR:-snapcast-cache}:/var/cache/snapcast
