@@ -11,7 +11,7 @@ services:
     volumes:
       - ./volumes/snapcast/snapserver.conf:/etc/snapserver.conf:ro
       - ${SNAPCAST_CACHE_DIR:-snapcast-cache}:/var/cache/snapcast
-      - ${SNAPCAST_DATA_DIR:-snapcast-data}:/vol/data/
+      - ${SNAPCAST_DATA_DIR:-snapcast-data}:/var/lib/snapserver/
       - /etc/localtime:/etc/localtime:ro
     labels:
       com.centurylinklabs.watchtower.scope: ${COMPOSE_PROJECT_NAME}
