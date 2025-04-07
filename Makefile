@@ -1,2 +1,2 @@
 init initialize:
-	@cp --interactive --recursive --verbose .skelleton/* .
+	@cp --interactive --verbose .skeleton/environment.d/*.env environment.d/ || true
