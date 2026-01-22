@@ -1,7 +1,7 @@
 services:
 
   snapcast:
-    image: phlak/snapcast-server
+    image: phlak/snapcast-server:${SNAPCAST_VERSION:-latest}
     env_file: environment.d/snapcast.env
     environment:
       WATCHTOWER_SCOPE: ${COMPOSE_PROJECT_NAME}
@@ -9,16 +9,16 @@ services:
     devices:
       - /dev/snd:/dev/snd
     volumes:
-      - ./volumes/snapcast/snapserver.conf:/etc/snapserver.conf:ro
-      - ${SNAPCAST_CACHE_DIR:-snapcast-cache}:/var/cache/snapserver
-      - ${SNAPCAST_DATA_DIR:-snapcast-data}:/var/lib/snapserver
+      - ${SNAPSERVER_CONFIG_PATH:-./volumes/snapcast/snapserver.conf}:/etc/snapserver.conf:ro
+      - ${SNAPCAST_CACHE_VOLUME:-snapcast-cache}:/var/cache/snapserver
+      - ${SNAPCAST_DATA_VOLUME:-snapcast-data}:/var/lib/snapserver
       - /etc/localtime:/etc/localtime:ro
     labels:
       com.centurylinklabs.watchtower.scope: ${COMPOSE_PROJECT_NAME}
     restart: unless-stopped
 
   watchtower:
-    image: containrrr/watchtower
+    image: containrrr/watchtower:${WATCHTOWER_VERSION:-latest}
     env_file: environment.d/watchtower.env
     environment:
       WATCHTOWER_SCOPE: ${COMPOSE_PROJECT_NAME}
