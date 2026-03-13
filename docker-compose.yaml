@@ -3,8 +3,6 @@ services:
   snapcast:
     image: phlak/snapcast-server:${SNAPCAST_VERSION:-latest}
     env_file: environment.d/snapcast.env
-    environment:
-      WATCHTOWER_SCOPE: ${COMPOSE_PROJECT_NAME}
     network_mode: host
     devices:
       - /dev/snd:/dev/snd

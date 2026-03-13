@@ -25,4 +25,3 @@ Installation
   5. Run `docker compose config` to validate and confirm your configuration
 
   6. Run `docker compose up -d` to start the containers
-
